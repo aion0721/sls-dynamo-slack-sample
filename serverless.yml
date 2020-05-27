@@ -1,0 +1,32 @@
+service: sls-sample-kobayashi
+plugins:
+  - serverless-dotenv-plugin
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: ap-northeast-1
+  environment:
+    dynamodb_arn: ${env.dynamodb_arn}
+    event_eventID: ${env.event_eventID}
+    slack_path: ${env.slack_path}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:DescribeStream
+        - dynamodb:GetRecords
+        - dynamodb:GetSharedIterator
+        - dynamodb:ListStreams
+      Resource:
+        - ${env:dynamodb_arn}
+functions:
+  dynamo_stream:
+    handler: handler.dynamo_stream
+    events:
+      - stream:
+          arn: ${env:dynamodb_arn}
+          batchSize: 1
+          startingPosition: TRIM_HORIZON
+          enabled: true
+  hello:
+    handler: handler.hello
