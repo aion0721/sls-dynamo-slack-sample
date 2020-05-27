@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "invoke:local": "sls invoke local --function dynamo_stream --path ./lib/data.json",
+    "invoke:aws": "sls invoke --function dynamo_stream",
+    "deploy": "sls deploy"
+  },
   "devDependencies": {
     "serverless-dotenv-plugin": "^2.4.2"
   }

@@ -30,7 +30,7 @@ module.exports.dynamo_stream = async (event) => {
       },
     ],
   } = event;
-  console.log(NewImage.hashtag.S);
+  console.log([NewImage]);
   const data = JSON.stringify({
     text: "Result: :apple:" + Date(),
     blocks: [],
