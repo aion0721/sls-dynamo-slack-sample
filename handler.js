@@ -22,35 +22,6 @@ module.exports.hello = async (event) => {
 };
 
 module.exports.dynamo_stream = async (event) => {
-  // Test event
-  event = {
-    Records: [
-      {
-        eventID: event_eventID,
-        eventName: "INSERT",
-        eventVersion: "1.1",
-        eventSource: "aws:dynamodb",
-        awsRegion: "ap-northeast-1",
-        dynamodb: {
-          ApproximateCreationDateTime: 1590219483,
-          Keys: {
-            id: {
-              S: "8",
-            },
-          },
-          NewImage: {
-            id: {
-              S: "8",
-            },
-          },
-          SequenceNumber: "794900000000016712999939",
-          SizeBytes: 6,
-          StreamViewType: "NEW_AND_OLD_IMAGES",
-        },
-        eventSourceARN: dynamodb_arn,
-      },
-    ],
-  };
   console.log(JSON.stringify(event, null, 2));
   const {
     Records: [
@@ -59,7 +30,7 @@ module.exports.dynamo_stream = async (event) => {
       },
     ],
   } = event;
-  console.log(NewImage.id.S);
+  console.log([NewImage]);
   const data = JSON.stringify({
     text: "Result: :apple:" + Date(),
     blocks: [],
@@ -91,6 +62,7 @@ module.exports.dynamo_stream = async (event) => {
     },
   };
 
+  // Push Slack
   //  const req = https.request(options, (res) => {
   //    if (res.statusCode === 200) {
   //      console.log("OK:" + res.statusCode);
