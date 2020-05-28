@@ -3,6 +3,7 @@ const https = require("https");
 const dynamodb_arn = process.env.dynamodb_arn;
 const event_eventID = process.env.evnt_eventID;
 const slack_path = process.env.slack_path;
+const pushMessage = require("./slackApi");
 
 module.exports.hello = async (event) => {
   return {
@@ -61,6 +62,8 @@ module.exports.dynamo_stream = async (event) => {
       "Content-Length": Buffer.byteLength(data),
     },
   };
+
+  await pushMessage({ text: "this is test message" });
 
   // Push Slack
   //  const req = https.request(options, (res) => {
