@@ -1,10 +1,10 @@
-import { WebClient } from "@slack/web-api";
+const { WebClient } = require("@slack/web-api");
 
 const { SLACK_API_TOKEN, SLACK_CHANNEL, SLACK_USERNAME } = process.env;
 
 const slackClient = new WebClient(SLACK_API_TOKEN);
 
-export const pushMessage = async ({ text }) => {
+const pushMessage = async ({ text }) => {
   const result = await slackClient.chat.postMessage({
     text,
     channel: SLACK_CHANNEL,
@@ -13,3 +13,5 @@ export const pushMessage = async ({ text }) => {
   });
   console.log({ result });
 };
+
+module.exports = pushMessage;
