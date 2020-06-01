@@ -13,6 +13,7 @@ provider:
     SLACK_API_TOKEN: ${env:SLACK_API_TOKEN}
     SLACK_CHANNEL: ${env:SLACK_CHANNEL}
     SLACK_USERNAME: ${env:SLACK_USERNAME}
+    SLACK_ICON: ${env:SLACK_ICON}
     LINK_BASEPATH: ${env:LINK_BASEPATH}
 
   iamRoleStatements:
