@@ -14,7 +14,13 @@ module.exports.dynamo_stream = async (event) => {
   } = event;
   console.log([NewImage]);
 
+  const txt = `新着の勉強会があります!確認してみましょう
+:memo:${NewImage.title.S}
+:page_with_curl:${NewImage.catchMessage.S}
+:date:${NewImage.startedAt.S}
+${link_basepath}${NewImage.hashtag.S} `;
+
   // Push Slack
-  //await pushMessage({ text: "${NewImage}" });
-  console.log({ text: NewImage.title.S });
+  await pushMessage({ text: txt });
+  //console.log({ text: txt });
 };
