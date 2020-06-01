@@ -1,8 +1,6 @@
 "use strict";
 const https = require("https");
-const dynamodb_arn = process.env.dynamodb_arn;
-const event_eventID = process.env.evnt_eventID;
-const slack_path = process.env.slack_path;
+const { dynamodb_arn, event_eventID, slack_path, link_basepath } = process.env;
 const pushMessage = require("./slackApi");
 
 module.exports.dynamo_stream = async (event) => {
@@ -16,22 +14,7 @@ module.exports.dynamo_stream = async (event) => {
   } = event;
   console.log([NewImage]);
 
-  await pushMessage({ text: "${NewImage}" });
-
   // Push Slack
-  //  const req = https.request(options, (res) => {
-  //    if (res.statusCode === 200) {
-  //      console.log("OK:" + res.statusCode);
-  //    } else {
-  //      console.log("Status Error:" + res.statusCode);
-  //    }
-  //  });
-  //
-  //  req.on("error", (e) => {
-  //    console.error(e);
-  //  });
-  //
-  //  req.write(data);
-  //
-  //  req.end();
+  //await pushMessage({ text: "${NewImage}" });
+  console.log({ text: NewImage.title.S });
 };

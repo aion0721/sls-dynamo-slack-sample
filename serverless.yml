@@ -13,6 +13,7 @@ provider:
     SLACK_API_TOKEN: ${env:SLACK_API_TOKEN}
     SLACK_CHANNEL: ${env:SLACK_CHANNEL}
     SLACK_USERNAME: ${env:SLACK_USERNAME}
+    LINK_BASEPATH: ${env:LINK_BASEPATH}
 
   iamRoleStatements:
     - Effect: "Allow"
@@ -32,5 +33,3 @@ functions:
           batchSize: 1
           startingPosition: TRIM_HORIZON
           enabled: true
-  hello:
-    handler: handler.hello
