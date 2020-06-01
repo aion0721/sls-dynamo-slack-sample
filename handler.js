@@ -1,26 +1,7 @@
 "use strict";
 const https = require("https");
-const dynamodb_arn = process.env.dynamodb_arn;
-const event_eventID = process.env.evnt_eventID;
-const slack_path = process.env.slack_path;
+const { dynamodb_arn, event_eventID, slack_path, link_basepath } = process.env;
 const pushMessage = require("./slackApi");
-
-module.exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: "Go Serverless v1.0! Your function executed successfully!",
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
-
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
-};
 
 module.exports.dynamo_stream = async (event) => {
   console.log(JSON.stringify(event, null, 2));
@@ -32,53 +13,14 @@ module.exports.dynamo_stream = async (event) => {
     ],
   } = event;
   console.log([NewImage]);
-  const data = JSON.stringify({
-    text: "Result: :apple:" + Date(),
-    blocks: [],
-    attachments: [
-      {
-        color: "#00FF00",
-        blocks: [
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text:
-                "A message *with some bold text* and _some italicized text_.",
-            },
-          },
-        ],
-      },
-    ],
-  });
 
-  const options = {
-    hostname: "hooks.slack.com",
-    port: 443,
-    path: slack_path,
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Content-Length": Buffer.byteLength(data),
-    },
-  };
-
-  await pushMessage({ text: "this is test message" });
+  const txt = `新着の勉強会があります!確認してみましょう
+:memo:${NewImage.title.S}
+:page_with_curl:${NewImage.catchMessage.S}
+:date:${NewImage.startedAt.S}
+${link_basepath}${NewImage.hashtag.S} `;
 
   // Push Slack
-  //  const req = https.request(options, (res) => {
-  //    if (res.statusCode === 200) {
-  //      console.log("OK:" + res.statusCode);
-  //    } else {
-  //      console.log("Status Error:" + res.statusCode);
-  //    }
-  //  });
-  //
-  //  req.on("error", (e) => {
-  //    console.error(e);
-  //  });
-  //
-  //  req.write(data);
-  //
-  //  req.end();
+  await pushMessage({ text: txt });
+  //console.log({ text: txt });
 };
