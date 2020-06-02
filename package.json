@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "invoke:local": "sls invoke local --function dynamo_stream --path ./lib/data.json",
-    "invoke:aws": "sls invoke --function dynamo_stream",
+    "invoke:local": "sls invoke local --function dynamoStream --path ./lib/data.json",
+    "invoke:aws": "sls invoke --function dynamoStream",
     "deploy": "sls deploy"
   },
   "devDependencies": {

@@ -26,8 +26,8 @@ provider:
       Resource:
         - ${env:dynamodb_arn}
 functions:
-  dynamo_stream:
-    handler: handler.dynamo_stream
+  dynamoStream:
+    handler: handler.dynamoStream
     events:
       - stream:
           arn: ${env:dynamodb_arn}
