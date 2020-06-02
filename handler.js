@@ -1,5 +1,5 @@
 "use strict";
-const { dynamodb_arn, event_eventID, slack_path, link_basepath } = process.env;
+const { LINK_BASEPATH } = process.env;
 const pushMessage = require("./slackApi");
 
 module.exports.dynamoStream = async (event) => {
@@ -11,13 +11,13 @@ module.exports.dynamoStream = async (event) => {
       },
     ],
   } = event;
-  console.log([NewImage]);
+  console.log({ NewImage });
 
   const text = `新着の勉強会があります!確認してみましょう
 :memo:${NewImage.title.S}
 :page_with_curl:${NewImage.catchMessage.S}
 :date:${NewImage.startedAt.S}
-${link_basepath}${NewImage.hashtag.S} `;
+${LINK_BASEPATH}${NewImage.hashtag.S} `;
 
   // Push Slack
   await pushMessage({ text });
